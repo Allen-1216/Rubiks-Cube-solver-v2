@@ -22,7 +22,43 @@ cube_R = Motor(Port.D) #R面
 server = BluetoothMailboxServer()
 mbox = TextMailbox('greeting', server)
 
-def rotate_U():
+def rotate_D(): #DLFR面 server端 port motor order
+    cube_D.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+
+def rotate_D_2times():
+    cube_D.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    
+def rotate_D_reverse():
+    cube_D.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+    
+def rotate_L():
+    cube_L.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+
+def rotate_L_2times():
+    cube_L.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    
+def rotate_L_reverse():
+    cube_L.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+
+def rotate_F():
+    cube_F.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+
+def rotate_F_2times():
+    cube_F.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    
+def rotate_F_reverse():
+    cube_F.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+
+def rotate_R():
+    cube_R.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+
+def rotate_R_2times():
+    cube_R.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    
+def rotate_R_reverse():
+    cube_R.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+
+def rotate_U(): #UB面 Client端 port motor order
     mbox.send('rotate_U')
     mbox.wait_new()
     print(mbox.read())
@@ -52,6 +88,7 @@ def rotate_B_reverse():
     mbox.wait_new()
     print(mbox.read())
     
+
 # The server must be started before the client!
 print('waiting for connection...')
 server.wait_for_connection()
@@ -63,21 +100,42 @@ print('connected!')
 mbox.wait()
 print(mbox.read())
 
-cube_D.run_angle(300, 90*0.6, then=Stop.HOLD, wait=True)
-wait(1000)
-cube_L.run_angle(300, 90*0.6, then=Stop.HOLD, wait=True)
-wait(1000)
+
 rotate_U()
 wait(1000)
-rotate_U_2times()
+rotate_L()
+wait(1000)
+rotate_F()
+wait(1000)
+rotate_R()
 wait(1000)
 rotate_B()
 wait(1000)
+rotate_D()
+wait(1000)
+
+rotate_U_2times()
+wait(1000)
+rotate_L_2times()
+wait(1000)
+rotate_F_2times()
+wait(1000)
+rotate_R_2times()
+wait(1000)
 rotate_B_2times()
-'''
-while True:
-    mbox.wait_new()
-    print(mbox.read())
-    mbox.send('RunMotorA')
-    break
-'''
+wait(1000)
+rotate_D_2times()
+wait(1000)
+
+rotate_U_reverse()
+wait(1000)
+rotate_L_reverse()
+wait(1000)
+rotate_F_reverse()
+wait(1000)
+rotate_R_reverse()
+wait(1000)
+rotate_B_reverse()
+wait(1000)
+rotate_D_reverse()
+wait(1000)
