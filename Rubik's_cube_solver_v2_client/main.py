@@ -7,12 +7,16 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from pybricks.messaging import BluetoothMailboxServer, BluetoothMailboxClient, TextMailbox, NumericMailbox
+import os
+import sys
 
 #port A,B = U面,B面
 
 ev3 = EV3Brick()
 
-motorA = Motor(Port.A)
+cube_U = Motor(Port.A) #U面
+cube_B = Motor(Port.B) #B面
+
 SERVER = 'ev3_03'
 
 client = BluetoothMailboxClient()
@@ -28,10 +32,34 @@ print('connected!')
 mbox.send('hello!')
 mbox.wait()
 print(mbox.read())
-num = mbox.read()
 
-if num == 'RunMotorA' :
-    motorA.run_time(300, 5000, then=Stop.HOLD, wait=True)
-    print('motorA done')
+
+while True:
+    order = mbox.read()
+    if order == 'rotate_U' :
+        wait(50)
+        cube_U.run_angle(300, 90*0.6, then=Stop.HOLD, wait=True)
+        mbox.send('rotate_U done')
+    if order == 'rotate_U_2times' :
+        wait(50)
+        cube_U.run_angle(300, 180*0.6, then=Stop.HOLD, wait=True)
+        mbox.send('rotate_U_2times done')
+    if order == 'rotate_B_reverse' :
+        wait(50)
+        cube_U.run_angle(300, -90*0.6, then=Stop.HOLD, wait=True)
+        mbox.send('rotate_B_reverse')
+        
+    if order == 'rotate_B' :
+        wait(50)
+        cube_B.run_angle(300, 90*0.6, then=Stop.HOLD, wait=True)
+        mbox.send('rotate_B done')
+    if order == 'rotate_B_2times' :
+        wait(50)
+        cube_B.run_angle(300, 180*0.6, then=Stop.HOLD, wait=True)
+        mbox.send('rotate_B_2times done')
+    if order == 'rotate_B_reverse' :
+        wait(50)
+        cube_B.run_angle(300, -90*0.6, then=Stop.HOLD, wait=True)
+        mbox.send('rotate_B_reverse')
+    mbox.wait_new()
     
-mbox.wait_new()
