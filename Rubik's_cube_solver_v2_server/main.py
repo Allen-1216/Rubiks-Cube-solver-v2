@@ -7,8 +7,15 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from pybricks.messaging import BluetoothMailboxServer, BluetoothMailboxClient, TextMailbox, NumericMailbox
+import random
 import os
 import sys
+
+'''
+  U
+L F R B
+  D
+'''
 
 #port A,B,C,D = D面,L面,F面,R面
 
@@ -23,42 +30,43 @@ server = BluetoothMailboxServer()
 mbox = TextMailbox('greeting', server)
 
 def rotate_D(): #DLFR面 server端 port motor order
-    cube_D.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+    cube_D.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
 
 def rotate_D_2times():
-    cube_D.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    cube_D.run_angle(450, 180*0.6, then=Stop.HOLD, wait=True)
     
 def rotate_D_reverse():
-    cube_D.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+    cube_D.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
     
 def rotate_L():
-    cube_L.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+    cube_L.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
 
 def rotate_L_2times():
-    cube_L.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    cube_L.run_angle(450, 180*0.6, then=Stop.HOLD, wait=True)
     
 def rotate_L_reverse():
-    cube_L.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+    cube_L.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
 
 def rotate_F():
-    cube_F.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+    cube_F.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
 
 def rotate_F_2times():
-    cube_F.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    cube_F.run_angle(450, 180*0.6, then=Stop.HOLD, wait=True)
     
 def rotate_F_reverse():
-    cube_F.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+    cube_F.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
 
 def rotate_R():
-    cube_R.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+    cube_R.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
 
 def rotate_R_2times():
-    cube_R.run_angle(500, 180*0.6, then=Stop.HOLD, wait=True)
+    cube_R.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
     
 def rotate_R_reverse():
-    cube_R.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+    cube_R.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
 
-def rotate_U(): #UB面 Client端 port motor order
+#UB面 Client端 port motor order
+def rotate_U(): 
     mbox.send('rotate_U')
     mbox.wait_new()
     print(mbox.read())
@@ -100,6 +108,99 @@ print('connected!')
 mbox.wait()
 print(mbox.read())
 
+'''
+#隨機打亂方塊
+for i in range(1):
+    randomnum = random.randint(1,12)
+    if randomnum == 1:
+        rotate_U()
+    elif randomnum == 2:
+        rotate_L()
+    elif randomnum == 3:
+        rotate_F()
+    elif randomnum == 4:
+        rotate_R()
+    elif randomnum == 5:
+        rotate_B()
+    elif randomnum == 6:
+        rotate_D()
+    elif randomnum == 7:
+        rotate_U_reverse()
+    elif randomnum == 8:
+        rotate_L_reverse()
+    elif randomnum == 9:
+        rotate_F_reverse()
+    elif randomnum == 10:
+        rotate_R_reverse()
+    elif randomnum == 11:
+        rotate_B_reverse()
+    elif randomnum == 12:
+        rotate_D_reverse()
+'''
+
+'''
+cube_x, cube_y = 6, 9
+cube3d = [[0 for j in range(cube_y)] for k in range(cube_x)] #儲存掃描顏色的2維陣列
+
+simulation_cube3d = cube3d.copy() #複製一個新陣列 模擬方塊當下的狀態
+kociemba_cube3d = cube3d.copy() #複製一個新陣列 儲存符合kociemba排列順序
+
+#
+#
+# 這裡寫掃描魔術方塊，取得顏色狀態部分
+#
+#
+
+if kociemba_cube3d == 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB':
+    print("已還原魔術方塊", file=sys.stderr)
+#狀態傳入kociemba演算法取得解法
+else:
+    rubikstring = "kociemba" + " " + kociemba_cube3d
+    solvestep = os.popen(rubikstring).read() #透過終端機取得演算法解法
+    print('kociemba演算法解法: ' + solvestep, file=sys.stderr)
+    
+    solvestep2 = solvestep.split(' ') #分割解法字串
+    
+    for i in range (len(solvestep2)):
+        if solvestep2[i] == "U":
+            rotate_U()
+        elif solvestep2[i] == "L":
+            rotate_L()
+        elif solvestep2[i] == "F":
+            rotate_F()
+        elif solvestep2[i] == "R":
+            rotate_R()
+        elif solvestep2[i] == "B":
+            rotate_B()
+        elif solvestep2[i] == "D":
+            rotate_D()
+
+        elif solvestep2[i] == "U'":
+            rotate_U_reverse()
+        elif solvestep2[i] == "L'":
+            rotate_L_reverse()
+        elif solvestep2[i] == "F'":
+            rotate_F_reverse()
+        elif solvestep2[i] == "R'":
+            rotate_R_reverse()
+        elif solvestep2[i] == "B'": 
+            rotate_B_reverse()
+        elif solvestep2[i] == "D'":
+            rotate_D_reverse()
+            
+        elif solvestep2[i] == "U2":
+            rotate_U_2times()
+        elif solvestep2[i] == "L2":
+            rotate_L_2times()
+        elif solvestep2[i] == "F2":
+            rotate_F_2times()
+        elif solvestep2[i] == "R2":
+            rotate_R_2times()
+        elif solvestep2[i] == "B2":
+            rotate_B_2times()
+        elif solvestep2[i] == "D2":
+            rotate_D_2times()
+'''
 
 rotate_U()
 wait(1000)
@@ -112,19 +213,6 @@ wait(1000)
 rotate_B()
 wait(1000)
 rotate_D()
-wait(1000)
-
-rotate_U_2times()
-wait(1000)
-rotate_L_2times()
-wait(1000)
-rotate_F_2times()
-wait(1000)
-rotate_R_2times()
-wait(1000)
-rotate_B_2times()
-wait(1000)
-rotate_D_2times()
 wait(1000)
 
 rotate_U_reverse()

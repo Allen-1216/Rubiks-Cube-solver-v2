@@ -38,7 +38,7 @@ while True:
     order = mbox.read()
     if order == 'rotate_U' :
         wait(50)
-        cube_U.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+        cube_U.run_angle(500, 95*0.6, then=Stop.HOLD, wait=True)
         mbox.send('rotate_U done')
         
     if order == 'rotate_U_2times' :
@@ -48,12 +48,12 @@ while True:
         
     if order == 'rotate_U_reverse' :
         wait(50)
-        cube_U.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+        cube_U.run_angle(500, -95*0.6, then=Stop.HOLD, wait=True)
         mbox.send('rotate_U_reverse done')
         
     if order == 'rotate_B' :
         wait(50)
-        cube_B.run_angle(500, 90*0.6, then=Stop.HOLD, wait=True)
+        cube_B.run_angle(500, 95*0.6, then=Stop.HOLD, wait=True)
         mbox.send('rotate_B done')
         
     if order == 'rotate_B_2times' :
@@ -63,7 +63,7 @@ while True:
         
     if order == 'rotate_B_reverse' :
         wait(50)
-        cube_B.run_angle(500, -90*0.6, then=Stop.HOLD, wait=True)
+        cube_B.run_angle(500, -95*0.6, then=Stop.HOLD, wait=True)
         mbox.send('rotate_B_reverse done')
         
     mbox.wait_new()
