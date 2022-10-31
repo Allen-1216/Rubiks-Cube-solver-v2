@@ -29,44 +29,57 @@ cube_R = Motor(Port.D) #R面
 server = BluetoothMailboxServer()
 mbox = TextMailbox('greeting', server)
 
-def rotate_D(): #DLFR面 server端 port motor order
-    cube_D.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
+#DLFR面 server端 port motor order
+def rotate_D(): #綠
+    cube_D.run_angle(450, 96*0.6, then=Stop.COAST,wait=True)
+    cube_D.reset_angle(0)
 
 def rotate_D_2times():
-    cube_D.run_angle(450, 180*0.6, then=Stop.HOLD, wait=True)
+    cube_D.run_angle(450, 180*0.6, then=Stop.COAST, wait=True)
+    cube_D.reset_angle(0)
     
 def rotate_D_reverse():
-    cube_D.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
+    cube_D.run_angle(450, -96*0.6, then=Stop.COAST, wait=True)
+    cube_D.reset_angle(0)
     
-def rotate_L():
-    cube_L.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
+def rotate_L(): #橘
+    cube_L.run_angle(450, 90*0.6, then=Stop.COAST, wait=True)
+    cube_L.reset_angle(0)
 
 def rotate_L_2times():
-    cube_L.run_angle(450, 180*0.6, then=Stop.HOLD, wait=True)
+    cube_L.run_angle(450, 180*0.6, then=Stop.COAST, wait=True)
+    cube_L.reset_angle(0)
     
 def rotate_L_reverse():
-    cube_L.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
+    cube_L.run_angle(450, -93*0.6, then=Stop.COAST, wait=True)
+    cube_L.reset_angle(0)
 
-def rotate_F():
-    cube_F.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
+def rotate_F(): #黃
+    cube_F.run_angle(450, 95*0.6, then=Stop.COAST, wait=True)
+    cube_F.reset_angle(0)
 
 def rotate_F_2times():
-    cube_F.run_angle(450, 180*0.6, then=Stop.HOLD, wait=True)
+    cube_F.run_angle(450, 180*0.6, then=Stop.COAST, wait=True)
+    cube_F.reset_angle(0)
     
 def rotate_F_reverse():
-    cube_F.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
+    cube_F.run_angle(450, -96*0.6, then=Stop.COAST, wait=True)
+    cube_F.reset_angle(0)
 
-def rotate_R():
-    cube_R.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
+def rotate_R(): #紅
+    cube_R.run_angle(450, 95*0.6, then=Stop.COAST, wait=True)
+    cube_R.reset_angle(0)
 
 def rotate_R_2times():
-    cube_R.run_angle(450, 95*0.6, then=Stop.HOLD, wait=True)
+    cube_R.run_angle(450, 180*0.6, then=Stop.COAST, wait=True)
+    cube_R.reset_angle(0)
     
 def rotate_R_reverse():
-    cube_R.run_angle(450, -95*0.6, then=Stop.HOLD, wait=True)
+    cube_R.run_angle(450, -95*0.6, then=Stop.COAST, wait=True)
+    cube_R.reset_angle(0)
 
 #UB面 Client端 port motor order
-def rotate_U(): 
+def rotate_U(): #藍
     mbox.send('rotate_U')
     mbox.wait_new()
     print(mbox.read())
@@ -81,7 +94,7 @@ def rotate_U_reverse():
     mbox.wait_new()
     print(mbox.read())
     
-def rotate_B():
+def rotate_B(): #白
     mbox.send('rotate_B')
     mbox.wait_new()
     print(mbox.read())
@@ -110,8 +123,9 @@ print(mbox.read())
 
 '''
 #隨機打亂方塊
-for i in range(1):
+for i in range(10):
     randomnum = random.randint(1,12)
+    wait(300)
     if randomnum == 1:
         rotate_U()
     elif randomnum == 2:
@@ -202,6 +216,7 @@ else:
             rotate_D_2times()
 '''
 
+
 rotate_U()
 wait(1000)
 rotate_L()
@@ -215,6 +230,7 @@ wait(1000)
 rotate_D()
 wait(1000)
 
+
 rotate_U_reverse()
 wait(1000)
 rotate_L_reverse()
@@ -226,4 +242,18 @@ wait(1000)
 rotate_B_reverse()
 wait(1000)
 rotate_D_reverse()
+wait(1000)
+
+
+rotate_U_2times()
+wait(1000)
+rotate_L_2times()
+wait(1000)
+rotate_F_2times()
+wait(1000)
+rotate_R_2times()
+wait(1000)
+rotate_B_2times()
+wait(1000)
+rotate_D_2times()
 wait(1000)
