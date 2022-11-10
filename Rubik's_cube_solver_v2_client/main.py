@@ -43,32 +43,32 @@ while True:
     order = mbox.read()
     if order == 'rotate_U' : #藍
         wait(50)
-        cube_U.run_angle(400, 99*0.6, then=Stop.COAST, wait=True)
+        cube_U.run_angle(400, -94, then=Stop.COAST, wait=True)
         mbox.send('rotate_U done')
         
     if order == 'rotate_U_2times' :
         wait(50)
-        cube_U.run_angle(400, 180*0.6, then=Stop.COAST, wait=True)
+        cube_U.run_angle(400, -184, then=Stop.COAST, wait=True)
         mbox.send('rotate_U_2times done')
         
     if order == 'rotate_U_reverse' :
         wait(50)
-        cube_U.run_angle(400, -96*0.6, then=Stop.COAST, wait=True)
+        cube_U.run_angle(400, 94, then=Stop.COAST, wait=True)
         mbox.send('rotate_U_reverse done')
         
-    if order == 'rotate_B' : #白
+    if order == 'rotate_B' : #白 (現在黃)
         wait(50)
-        cube_B.run_angle(400, 96*0.6, then=Stop.COAST, wait=True)
+        cube_B.run_angle(400, -94, then=Stop.COAST, wait=True)
         mbox.send('rotate_B done')
         
     if order == 'rotate_B_2times' :
         wait(50)
-        cube_B.run_angle(400, 180*0.6, then=Stop.COAST, wait=True)
+        cube_B.run_angle(400, -184, then=Stop.COAST, wait=True)
         mbox.send('rotate_B_2times done')
         
     if order == 'rotate_B_reverse' :
         wait(50)
-        cube_B.run_angle(400, -96*0.6, then=Stop.COAST, wait=True)
+        cube_B.run_angle(400, 96, then=Stop.COAST, wait=True)
         mbox.send('rotate_B_reverse done')
         
     mbox.wait()
