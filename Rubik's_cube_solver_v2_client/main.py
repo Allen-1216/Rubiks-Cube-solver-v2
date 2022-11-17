@@ -123,36 +123,41 @@ def rotate_B_reverse():
     print(mbox.read())
     
 
-'''
 #隨機打亂方塊
+random_length = 20
+random_array = [0 for j in range(random_length)] #隨機長度
+
 for i in range(20):
-    randomnum = random.randint(1,12)
+    random_num = random.randint(1,12)
+    while random_num == random_array[i-1]+6 or random_num == random_array[i-1]-6:
+        random_num = random.randint(1,12)
+    random_array[i] = random_num
     wait(1000)
-    if randomnum == 1:
+    if random_num == 1:
         rotate_U()
-    elif randomnum == 2:
+    elif random_num == 2:
         rotate_L()
-    elif randomnum == 3:
+    elif random_num == 3:
         rotate_F()
-    elif randomnum == 4:
+    elif random_num == 4:
         rotate_R()
-    elif randomnum == 5:
+    elif random_num == 5:
         rotate_B()
-    elif randomnum == 6:
+    elif random_num == 6:
         rotate_D()
-    elif randomnum == 7:
+    elif random_num == 7:
         rotate_U_reverse()
-    elif randomnum == 8:
+    elif random_num == 8:
         rotate_L_reverse()
-    elif randomnum == 9:
+    elif random_num == 9:
         rotate_F_reverse()
-    elif randomnum == 10:
+    elif random_num == 10:
         rotate_R_reverse()
-    elif randomnum == 11:
+    elif random_num == 11:
         rotate_B_reverse()
-    elif randomnum == 12:
+    elif random_num == 12:
         rotate_D_reverse()
-'''
+
 
 '''
 cube_x, cube_y = 6, 9
@@ -217,19 +222,6 @@ else:
         elif solvestep2[i] == "D2":
             rotate_D_2times()
 '''
-
-rotate_U_2times()
-wait(1000)
-rotate_L_2times()
-wait(1000)
-rotate_F_2times()
-wait(1000)
-rotate_R_2times()
-wait(1000)
-rotate_B_2times()
-wait(1000)
-rotate_D_2times()
-wait(1000)
 
 '''
 rotate_U()
