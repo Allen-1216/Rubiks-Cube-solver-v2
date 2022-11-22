@@ -44,52 +44,66 @@ print('connected!')
 
 #DLFR面 Client端 port motor order
 def rotate_D(): #綠
-    cube_D.run_angle(400, -91, then=Stop.COAST,wait=True)
-    #cube_D.reset_angle(0)
+    cube_D.run_angle(700, 271, then=Stop.COAST,wait=True)
+    print('rotate_D angle : ', cube_D.angle(), file=sys.stderr)
+    cube_D.reset_angle(0)
 
 def rotate_D_2times():
-    cube_D.run_angle(400, -182, then=Stop.COAST, wait=True)
-    #cube_D.reset_angle(0)
+    cube_D.run_angle(700, 540, then=Stop.COAST, wait=True)
+    print('rotate_D_2times angle : ', cube_D.angle(), file=sys.stderr)
+    cube_D.reset_angle(0)
     
 def rotate_D_reverse():
-    cube_D.run_angle(400, 91, then=Stop.COAST, wait=True)
-    #cube_D.reset_angle(0) 涼去 調不好
+    cube_D.run_angle(700, -270, then=Stop.COAST, wait=True)
+    print('rotate_D_reverse angle : ', cube_D.angle(), file=sys.stderr)
+    cube_D.reset_angle(0)
+    #有點小歪
     
 def rotate_L(): #橘
-    cube_L.run_angle(400, -87, then=Stop.COAST, wait=True)
-    #cube_L.reset_angle(0)
+    cube_L.run_angle(700, 270, then=Stop.COAST, wait=True)
+    print('rotate_L angle : ', cube_L.angle(), file=sys.stderr)
+    cube_L.reset_angle(0)
 
 def rotate_L_2times():
-    cube_L.run_angle(400, -182, then=Stop.COAST, wait=True)
-    #cube_L.reset_angle(0)
+    cube_L.run_angle(700, 540, then=Stop.COAST, wait=True)
+    print('rotate_L_2times angle : ', cube_L.angle(), file=sys.stderr)
+    cube_L.reset_angle(0)
     
 def rotate_L_reverse():
-    cube_L.run_angle(400, 92, then=Stop.COAST, wait=True)
-    #cube_L.reset_angle(0)
+    cube_L.run_angle(700, -270, then=Stop.COAST, wait=True)
+    print('rotate_L_reverse angle : ', cube_L.angle(), file=sys.stderr)
+    cube_L.reset_angle(0)
 
 def rotate_F(): #黃 (目前白)
-    cube_F.run_angle(400, -94, then=Stop.COAST, wait=True)
-    #cube_F.reset_angle(0)
+    cube_F.run_angle(700, 270, then=Stop.COAST, wait=True)
+    print('rotate_F angle : ', cube_F.angle(), file=sys.stderr)
+    cube_F.reset_angle(0)
 
 def rotate_F_2times():
-    cube_F.run_angle(400, -182, then=Stop.COAST, wait=True)
-    #cube_F.reset_angle(0)
+    cube_F.run_angle(700, 541, then=Stop.COAST, wait=True)
+    print('rotate_F_2times angle : ', cube_F.angle(), file=sys.stderr)
+    cube_F.reset_angle(0)
     
 def rotate_F_reverse():
-    cube_F.run_angle(400, 91, then=Stop.COAST, wait=True)
-    #cube_F.reset_angle(0)
+    cube_F.run_angle(700, -271, then=Stop.COAST, wait=True)
+    print('rotate_F_reverse angle : ', cube_F.angle(), file=sys.stderr)
+    cube_F.reset_angle(0)
 
 def rotate_R(): #紅
-    cube_R.run_angle(400, -92, then=Stop.COAST, wait=True)
-    #print('cube_R :',cube_R.angle())
+    cube_R.run_angle(700, 270, then=Stop.COAST, wait=True)
+    print('rotate_R angle : ', cube_R.angle(), file=sys.stderr)
+    cube_R.reset_angle(0)
 
 def rotate_R_2times():
-    cube_R.run_angle(400, -182, then=Stop.COAST, wait=True)
-    #cube_R.reset_angle(0)
+    cube_R.run_angle(700, 540, then=Stop.COAST, wait=True)
+    print('rotate_R_2times angle : ', cube_R.angle(), file=sys.stderr)
+    cube_R.reset_angle(0)
     
 def rotate_R_reverse():
-    cube_R.run_angle(400, 92, then=Stop.COAST, wait=True)
-    #cube_R.reset_angle(0)
+    cube_R.run_angle(700, -270, then=Stop.COAST, wait=True)
+    print('rotate_R_reverse angle : ', cube_R.angle(), file=sys.stderr)
+    cube_R.reset_angle(0)
+
 
 #UB面 server端 port motor order
 def rotate_U(): #藍
@@ -126,7 +140,6 @@ def rotate_B_reverse():
 #隨機打亂方塊
 random_length = 20
 random_array = [0 for j in range(random_length)] #隨機長度
-
 for i in range(20):
     random_num = random.randint(1,12)
     while random_num == random_array[i-1]+6 or random_num == random_array[i-1]-6:
@@ -157,6 +170,8 @@ for i in range(20):
         rotate_B_reverse()
     elif random_num == 12:
         rotate_D_reverse()
+
+
 
 
 '''
@@ -222,6 +237,8 @@ else:
         elif solvestep2[i] == "D2":
             rotate_D_2times()
 '''
+
+
 
 '''
 rotate_U()

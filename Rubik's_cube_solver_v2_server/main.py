@@ -41,33 +41,45 @@ while True:
     order = mbox.read()
     if order == 'rotate_U' : #藍
         wait(50)
-        cube_U.run_angle(400, -93, then=Stop.COAST, wait=True)
+        cube_U.run_angle(700, 270, then=Stop.COAST, wait=True)
+        print('rotate_U angle : ', cube_U.angle(), file=sys.stderr)
         mbox.send('rotate_U done')
+        cube_U.reset_angle(0)
         
     if order == 'rotate_U_2times' :
         wait(50)
-        cube_U.run_angle(400, -184, then=Stop.COAST, wait=True)
+        cube_U.run_angle(700, 541, then=Stop.COAST, wait=True)
+        print('rotate_U_2times angle : ', cube_U.angle(), file=sys.stderr)
         mbox.send('rotate_U_2times done')
+        cube_U.reset_angle(0)
         
     if order == 'rotate_U_reverse' :
         wait(50)
-        cube_U.run_angle(400, 93, then=Stop.COAST, wait=True)
+        cube_U.run_angle(700, -270, then=Stop.COAST, wait=True)
+        print('rotate_U_reverse angle : ', cube_U.angle(), file=sys.stderr)
         mbox.send('rotate_U_reverse done')
+        cube_U.reset_angle(0)
         
     if order == 'rotate_B' : #白 (現在黃)
         wait(50)
-        cube_B.run_angle(400, -92, then=Stop.COAST, wait=True)
+        cube_B.run_angle(700, 270, then=Stop.COAST, wait=True)
+        print('rotate_B angle : ', cube_B.angle(), file=sys.stderr)
         mbox.send('rotate_B done')
+        cube_B.reset_angle(0)
         
     if order == 'rotate_B_2times' :
         wait(50)
-        cube_B.run_angle(400, -184, then=Stop.COAST, wait=True)
+        cube_B.run_angle(700, 540, then=Stop.COAST, wait=True)
+        print('rotate_B_2times angle : ', cube_B.angle(), file=sys.stderr)
         mbox.send('rotate_B_2times done')
+        cube_B.reset_angle(0)
         
     if order == 'rotate_B_reverse' :
         wait(50)
-        cube_B.run_angle(400, 92, then=Stop.COAST, wait=True)
+        cube_B.run_angle(700, -270, then=Stop.COAST, wait=True)
+        print('rotate_B_reverse angle : ', cube_B.angle(), file=sys.stderr)
         mbox.send('rotate_B_reverse done')
+        cube_B.reset_angle(0)
         
     mbox.wait()
     
