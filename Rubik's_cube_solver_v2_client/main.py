@@ -20,7 +20,7 @@ L F R B
 #port A,B,C,D = D面,L面,F面,R面
 
 ev3 = EV3Brick()
-
+'''
 cube_D = Motor(Port.A) #D面
 cube_L = Motor(Port.B) #L面
 cube_F = Motor(Port.C) #F面
@@ -34,7 +34,7 @@ mbox = TextMailbox('greeting', client)
 print('establishing connection...')
 client.connect(SERVER)
 print('connected!')
-
+'''
 # In this program, the client sends the first message and then waits for the
 # server to reply.
 
@@ -42,7 +42,7 @@ print('connected!')
 #mbox.wait()
 #print(mbox.read())
 
-#DLFR面 Client端 port motor order
+#DLFR面 馬達控制
 def rotate_D(): #綠
     cube_D.run_angle(700, 271, then=Stop.COAST,wait=True)
     print('rotate_D angle : ', cube_D.angle(), file=sys.stderr)
@@ -105,7 +105,7 @@ def rotate_R_reverse():
     cube_R.reset_angle(0)
 
 
-#UB面 server端 port motor order
+#UB面 server端 馬達控制
 def rotate_U(): #藍
     mbox.send('rotate_U')
     mbox.wait()
@@ -136,16 +136,16 @@ def rotate_B_reverse():
     mbox.wait()
     print(mbox.read())
     
-
+'''
 #隨機打亂方塊
-random_length = 20
+random_length = 30
 random_array = [0 for j in range(random_length)] #隨機長度
-for i in range(20):
+for i in range (30):
     random_num = random.randint(1,12)
     while random_num == random_array[i-1]+6 or random_num == random_array[i-1]-6:
         random_num = random.randint(1,12)
     random_array[i] = random_num
-    wait(1000)
+    wait(150)
     if random_num == 1:
         rotate_U()
     elif random_num == 2:
@@ -170,22 +170,44 @@ for i in range(20):
         rotate_B_reverse()
     elif random_num == 12:
         rotate_D_reverse()
-
-
-
-
 '''
+
+
+
+
 cube_x, cube_y = 6, 9
 cube3d = [[0 for j in range(cube_y)] for k in range(cube_x)] #儲存掃描顏色的2維陣列
 
 simulation_cube3d = cube3d.copy() #複製一個新陣列 模擬方塊當下的狀態
 kociemba_cube3d = cube3d.copy() #複製一個新陣列 儲存符合kociemba排列順序
 
-#
-#
-# 這裡寫掃描魔術方塊，取得顏色狀態部分
-#
-#
+
+# pixy2掃描魔術方塊，取得顏色狀態，透過arduino輸出txt檔案到專案資料夾，再由這裡讀取txt狀態(最後一行)
+#如果最後一行不是54個結果，往上一行搜尋
+with open('teraterm.txt', 'r') as f:
+    txtnum = -1
+    totalnum = 54
+    content = list(f.readlines())
+    last_line = content[txtnum]
+    while len(last_line) != totalnum:
+        totalnum = 56
+        txtnum -= 1
+        last_line = content[txtnum]
+    print(last_line, file=sys.stderr)
+x = 0
+y = 0
+for k in range(54):
+    cube3d[x][y] = last_line[k]
+    y += 1
+    if y > 8:
+        y = 0
+        x += 1
+
+for i in range (6):
+    for j in range(9):
+        print(cube3d[i][j],end=' ', file=sys.stderr)
+    print(file=sys.stderr)
+
 
 if kociemba_cube3d == 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB':
     print("已還原魔術方塊", file=sys.stderr)
@@ -196,7 +218,7 @@ else:
     print('kociemba演算法解法: ' + solvestep, file=sys.stderr)
     
     solvestep2 = solvestep.split(' ') #分割解法字串
-    
+    '''
     for i in range (len(solvestep2)):
         if solvestep2[i] == "U":
             rotate_U()
@@ -236,7 +258,7 @@ else:
             rotate_B_2times()
         elif solvestep2[i] == "D2":
             rotate_D_2times()
-'''
+    '''
 
 
 
