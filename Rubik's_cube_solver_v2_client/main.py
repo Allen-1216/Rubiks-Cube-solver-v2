@@ -57,7 +57,6 @@ def rotate_D_reverse():
     cube_D.run_angle(700, -270, then=Stop.COAST, wait=True)
     print('rotate_D_reverse angle : ', cube_D.angle(), file=sys.stderr)
     cube_D.reset_angle(0)
-    #有點小歪
     
 def rotate_L(): #橘
     cube_L.run_angle(700, 270, then=Stop.COAST, wait=True)
@@ -172,15 +171,10 @@ for i in range (30):
         rotate_D_reverse()
 '''
 
-
-
-
-cube_x, cube_y = 6, 9
-cube3d = [[0 for j in range(cube_y)] for k in range(cube_x)] #儲存掃描顏色的2維陣列
-
-simulation_cube3d = cube3d.copy() #複製一個新陣列 模擬方塊當下的狀態
-kociemba_cube3d = cube3d.copy() #複製一個新陣列 儲存符合kociemba排列順序
-
+#cube_x, cube_y = 6, 9
+cube_list = 54
+#cube2d = [[0 for j in range(cube_y)] for k in range(cube_x)] #儲存掃描顏色的2維陣列
+cube1d = [0 for i in range(cube_list)] #儲存掃描顏色的1維陣列
 
 # pixy2掃描魔術方塊，取得顏色狀態，透過arduino輸出txt檔案到專案資料夾，再由這裡讀取txt狀態(最後一行)
 #如果最後一行不是54個結果，往上一行搜尋
@@ -193,27 +187,51 @@ with open('teraterm.txt', 'r') as f:
         totalnum = 56
         txtnum -= 1
         last_line = content[txtnum]
-    print(last_line, file=sys.stderr)
+    print('Arduino傳過來的字串:', last_line, file=sys.stderr)
+    print(file=sys.stderr)
 x = 0
 y = 0
 for k in range(54):
-    cube3d[x][y] = last_line[k]
+    cube1d[k] = last_line[k]
+    #cube2d[x][y] = last_line[k]
     y += 1
     if y > 8:
         y = 0
         x += 1
 
-for i in range (6):
-    for j in range(9):
-        print(cube3d[i][j],end=' ', file=sys.stderr)
+simulation_cube1d = cube1d.copy() #複製一個新一維陣列 符合ULFRBD順序
+simulation_cube1d = [element.replace('L', 'N') for element in simulation_cube1d] #交換L跟R
+simulation_cube1d = [element.replace('R', 'L') for element in simulation_cube1d]
+simulation_cube1d = [element.replace('N', 'R') for element in simulation_cube1d]
+
+print('LR交換後的一維陣列: ', file=sys.stderr)
+for i in range(54):
+    print(simulation_cube1d[i], end=' ', file=sys.stderr)
+    if (i+1) % 9 == 0:
+        print(file=sys.stderr)
+print(file=sys.stderr)
+
+#新增一個新字串 儲存符合kociemba排列順序 URFDLB
+kociemba_cube1d = \
+ str(simulation_cube1d[0]) + str(simulation_cube1d[1]) + str(simulation_cube1d[2]) + str(simulation_cube1d[3]) + 'U' + str(simulation_cube1d[5]) + str(simulation_cube1d[6]) + str(simulation_cube1d[7]) + str(simulation_cube1d[8])\
++str(simulation_cube1d[27]) + str(simulation_cube1d[28]) + str(simulation_cube1d[29]) + str(simulation_cube1d[30]) + 'R' + str(simulation_cube1d[32]) + str(simulation_cube1d[33]) + str(simulation_cube1d[34]) + str(simulation_cube1d[35])\
++str(simulation_cube1d[18]) + str(simulation_cube1d[19]) + str(simulation_cube1d[20]) + str(simulation_cube1d[21]) + 'F' + str(simulation_cube1d[23]) + str(simulation_cube1d[24]) + str(simulation_cube1d[25]) + str(simulation_cube1d[26])\
++str(simulation_cube1d[45]) + str(simulation_cube1d[46]) + str(simulation_cube1d[47]) + str(simulation_cube1d[48]) + 'D' + str(simulation_cube1d[50]) + str(simulation_cube1d[51]) + str(simulation_cube1d[52]) + str(simulation_cube1d[53])\
++str(simulation_cube1d[9]) + str(simulation_cube1d[10]) + str(simulation_cube1d[11]) + str(simulation_cube1d[12]) + 'L' + str(simulation_cube1d[14]) + str(simulation_cube1d[15]) + str(simulation_cube1d[16]) + str(simulation_cube1d[17])\
++str(simulation_cube1d[36]) + str(simulation_cube1d[37]) + str(simulation_cube1d[38]) + str(simulation_cube1d[39]) + 'B' + str(simulation_cube1d[41]) + str(simulation_cube1d[42]) + str(simulation_cube1d[43]) + str(simulation_cube1d[44])
+
+print('符合kociemba排序的字串:', kociemba_cube1d, file=sys.stderr)
+
+if kociemba_cube1d == 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB': #檢查現在狀態是否已還原
     print(file=sys.stderr)
-
-
-if kociemba_cube3d == 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB':
-    print("已還原魔術方塊", file=sys.stderr)
+    print("*****************************************************", file=sys.stderr)
+    print("******************已還原魔術方塊**********************", file=sys.stderr)
+    print("*****************************************************", file=sys.stderr)
+    print(file=sys.stderr)
+    
 #狀態傳入kociemba演算法取得解法
 else:
-    rubikstring = "kociemba" + " " + kociemba_cube3d
+    rubikstring = "kociemba" + " " + kociemba_cube1d
     solvestep = os.popen(rubikstring).read() #透過終端機取得演算法解法
     print('kociemba演算法解法: ' + solvestep, file=sys.stderr)
     
