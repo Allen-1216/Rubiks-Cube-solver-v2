@@ -20,7 +20,7 @@ L F R B
 ev3 = EV3Brick()
 
 cube_U = Motor(Port.A) #U面
-cube_B = Motor(Port.B) #B面
+cube_F = Motor(Port.B) #F面
 
 server = BluetoothMailboxServer()
 mbox = TextMailbox('greeting', server)
@@ -60,26 +60,26 @@ while True:
         mbox.send('rotate_U_reverse done')
         cube_U.reset_angle(0)
         
-    if order == 'rotate_B' : #白 (現在黃)
+    if order == 'rotate_F' : #黃
         wait(50)
-        cube_B.run_angle(700, 270, then=Stop.COAST, wait=True)
-        print('rotate_B angle : ', cube_B.angle(), file=sys.stderr)
-        mbox.send('rotate_B done')
-        cube_B.reset_angle(0)
+        cube_F.run_angle(700, 270, then=Stop.COAST, wait=True)
+        print('rotate_F angle : ', cube_F.angle(), file=sys.stderr)
+        mbox.send('rotate_F done')
+        cube_F.reset_angle(0)
         
-    if order == 'rotate_B_2times' :
+    if order == 'rotate_F_2times' :
         wait(50)
-        cube_B.run_angle(700, 540, then=Stop.COAST, wait=True)
-        print('rotate_B_2times angle : ', cube_B.angle(), file=sys.stderr)
-        mbox.send('rotate_B_2times done')
-        cube_B.reset_angle(0)
+        cube_F.run_angle(700, 541, then=Stop.COAST, wait=True)
+        print('rotate_F_2times angle : ', cube_F.angle(), file=sys.stderr)
+        mbox.send('rotate_F_2times done')
+        cube_F.reset_angle(0)
         
-    if order == 'rotate_B_reverse' :
+    if order == 'rotate_F_reverse' :
         wait(50)
-        cube_B.run_angle(700, -270, then=Stop.COAST, wait=True)
-        print('rotate_B_reverse angle : ', cube_B.angle(), file=sys.stderr)
-        mbox.send('rotate_B_reverse done')
-        cube_B.reset_angle(0)
+        cube_F.run_angle(700, -271, then=Stop.COAST, wait=True)
+        print('rotate_F_reverse angle : ', cube_F.angle(), file=sys.stderr)
+        mbox.send('rotate_F_reverse done')
+        cube_F.reset_angle(0)
         
     mbox.wait()
     

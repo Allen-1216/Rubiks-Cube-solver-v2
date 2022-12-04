@@ -20,11 +20,11 @@ L F R B
 #port A,B,C,D = D面,L面,F面,R面
 
 ev3 = EV3Brick()
-'''
+
 cube_D = Motor(Port.A) #D面
-cube_L = Motor(Port.B) #L面
-cube_F = Motor(Port.C) #F面
-cube_R = Motor(Port.D) #R面
+cube_R = Motor(Port.B) #R面
+cube_B = Motor(Port.C) #B面
+cube_L = Motor(Port.D) #L面
 
 SERVER = 'ev3_04'
 
@@ -34,7 +34,7 @@ mbox = TextMailbox('greeting', client)
 print('establishing connection...')
 client.connect(SERVER)
 print('connected!')
-'''
+
 # In this program, the client sends the first message and then waits for the
 # server to reply.
 
@@ -73,20 +73,20 @@ def rotate_L_reverse():
     print('rotate_L_reverse angle : ', cube_L.angle(), file=sys.stderr)
     cube_L.reset_angle(0)
 
-def rotate_F(): #黃 (目前白)
-    cube_F.run_angle(700, 270, then=Stop.COAST, wait=True)
-    print('rotate_F angle : ', cube_F.angle(), file=sys.stderr)
-    cube_F.reset_angle(0)
+def rotate_B(): #黃 (目前白)
+    cube_B.run_angle(700, 270, then=Stop.COAST, wait=True)
+    print('rotate_B angle : ', cube_B.angle(), file=sys.stderr)
+    cube_B.reset_angle(0)
 
-def rotate_F_2times():
-    cube_F.run_angle(700, 541, then=Stop.COAST, wait=True)
-    print('rotate_F_2times angle : ', cube_F.angle(), file=sys.stderr)
-    cube_F.reset_angle(0)
+def rotate_B_2times():
+    cube_B.run_angle(700, 540, then=Stop.COAST, wait=True)
+    print('rotate_B_2times angle : ', cube_B.angle(), file=sys.stderr)
+    cube_B.reset_angle(0)
     
-def rotate_F_reverse():
-    cube_F.run_angle(700, -271, then=Stop.COAST, wait=True)
-    print('rotate_F_reverse angle : ', cube_F.angle(), file=sys.stderr)
-    cube_F.reset_angle(0)
+def rotate_B_reverse():
+    cube_B.run_angle(700, -270, then=Stop.COAST, wait=True)
+    print('rotate_B_reverse angle : ', cube_B.angle(), file=sys.stderr)
+    cube_B.reset_angle(0)
 
 def rotate_R(): #紅
     cube_R.run_angle(700, 270, then=Stop.COAST, wait=True)
@@ -120,56 +120,22 @@ def rotate_U_reverse():
     mbox.wait()
     print(mbox.read())
     
-def rotate_B(): #白 (目前黃)
-    mbox.send('rotate_B')
+def rotate_F(): #白 (目前黃)
+    mbox.send('rotate_F')
     mbox.wait()
     print(mbox.read())
 
-def rotate_B_2times():
-    mbox.send('rotate_B_2times')
+def rotate_F_2times():
+    mbox.send('rotate_F_2times')
     mbox.wait()
     print(mbox.read())
 
-def rotate_B_reverse():
-    mbox.send('rotate_B_reverse')
+def rotate_F_reverse():
+    mbox.send('rotate_F_reverse')
     mbox.wait()
     print(mbox.read())
     
-'''
-#隨機打亂方塊
-random_length = 30
-random_array = [0 for j in range(random_length)] #隨機長度
-for i in range (30):
-    random_num = random.randint(1,12)
-    while random_num == random_array[i-1]+6 or random_num == random_array[i-1]-6:
-        random_num = random.randint(1,12)
-    random_array[i] = random_num
-    wait(150)
-    if random_num == 1:
-        rotate_U()
-    elif random_num == 2:
-        rotate_L()
-    elif random_num == 3:
-        rotate_F()
-    elif random_num == 4:
-        rotate_R()
-    elif random_num == 5:
-        rotate_B()
-    elif random_num == 6:
-        rotate_D()
-    elif random_num == 7:
-        rotate_U_reverse()
-    elif random_num == 8:
-        rotate_L_reverse()
-    elif random_num == 9:
-        rotate_F_reverse()
-    elif random_num == 10:
-        rotate_R_reverse()
-    elif random_num == 11:
-        rotate_B_reverse()
-    elif random_num == 12:
-        rotate_D_reverse()
-'''
+
 
 #cube_x, cube_y = 6, 9
 cube_list = 54
@@ -228,7 +194,7 @@ if kociemba_cube1d == 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB': 
     print("******************已還原魔術方塊**********************", file=sys.stderr)
     print("*****************************************************", file=sys.stderr)
     print(file=sys.stderr)
-    
+
 #狀態傳入kociemba演算法取得解法
 else:
     rubikstring = "kociemba" + " " + kociemba_cube1d
@@ -236,7 +202,6 @@ else:
     print('kociemba演算法解法: ' + solvestep, file=sys.stderr)
     
     solvestep2 = solvestep.split(' ') #分割解法字串
-    '''
     for i in range (len(solvestep2)):
         if solvestep2[i] == "U":
             rotate_U()
@@ -276,11 +241,11 @@ else:
             rotate_B_2times()
         elif solvestep2[i] == "D2":
             rotate_D_2times()
-    '''
-
+    ev3.speaker.beep()
 
 
 '''
+#test
 rotate_U()
 wait(1000)
 rotate_L()
@@ -320,3 +285,39 @@ wait(1000)
 rotate_D_2times()
 wait(1000)
 '''
+
+
+#隨機打亂方塊
+wait(10000)
+random_length = 30
+random_array = [0 for j in range(random_length)] #隨機長度
+for i in range (30):
+    random_num = random.randint(1,12)
+    while random_num == random_array[i-1]+6 or random_num == random_array[i-1]-6:
+        random_num = random.randint(1,12)
+    random_array[i] = random_num
+    wait(150)
+    if random_num == 1:
+        rotate_U()
+    elif random_num == 2:
+        rotate_L()
+    elif random_num == 3:
+        rotate_F()
+    elif random_num == 4:
+        rotate_R()
+    elif random_num == 5:
+        rotate_B()
+    elif random_num == 6:
+        rotate_D()
+    elif random_num == 7:
+        rotate_U_reverse()
+    elif random_num == 8:
+        rotate_L_reverse()
+    elif random_num == 9:
+        rotate_F_reverse()
+    elif random_num == 10:
+        rotate_R_reverse()
+    elif random_num == 11:
+        rotate_B_reverse()
+    elif random_num == 12:
+        rotate_D_reverse()
