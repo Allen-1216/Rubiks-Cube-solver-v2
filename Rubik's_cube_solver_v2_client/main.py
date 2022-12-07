@@ -73,7 +73,7 @@ def rotate_L_reverse():
     print('rotate_L_reverse angle : ', cube_L.angle(), file=sys.stderr)
     cube_L.reset_angle(0)
 
-def rotate_B(): #黃 (目前白)
+def rotate_B(): #白
     cube_B.run_angle(700, 270, then=Stop.COAST, wait=True)
     print('rotate_B angle : ', cube_B.angle(), file=sys.stderr)
     cube_B.reset_angle(0)
@@ -120,7 +120,7 @@ def rotate_U_reverse():
     mbox.wait()
     print(mbox.read())
     
-def rotate_F(): #白 (目前黃)
+def rotate_F(): #黃
     mbox.send('rotate_F')
     mbox.wait()
     print(mbox.read())
@@ -149,10 +149,23 @@ with open('teraterm.txt', 'r') as f:
     totalnum = 54
     content = list(f.readlines())
     last_line = content[txtnum]
-    while len(last_line) != totalnum:
+    u_text = last_line.count('U') #過濾各個顏色是否是9個
+    l_text = last_line.count('L')
+    f_text = last_line.count('F')
+    r_text = last_line.count('R')
+    b_text = last_line.count('B')
+    d_text = last_line.count('D')
+    while len(last_line) != totalnum or ((u_text != 9 ) or ( l_text != 9 ) or (f_text != 9) or (r_text != 9 ) or (b_text != 9) or (d_text != 9)):
         totalnum = 56
         txtnum -= 1
         last_line = content[txtnum]
+        u_text = last_line.count('U')
+        l_text = last_line.count('L')
+        f_text = last_line.count('F')
+        r_text = last_line.count('R')
+        b_text = last_line.count('B')
+        d_text = last_line.count('D')
+        print('過濾:',u_text, l_text, f_text, r_text, b_text, d_text, file=sys.stderr)
     print('Arduino傳過來的字串:', last_line, file=sys.stderr)
     print(file=sys.stderr)
 x = 0
@@ -194,6 +207,9 @@ if kociemba_cube1d == 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB': 
     print("******************已還原魔術方塊**********************", file=sys.stderr)
     print("*****************************************************", file=sys.stderr)
     print(file=sys.stderr)
+    
+
+    
 
 #狀態傳入kociemba演算法取得解法
 else:
@@ -286,7 +302,7 @@ rotate_D_2times()
 wait(1000)
 '''
 
-
+'''
 #隨機打亂方塊
 wait(10000)
 random_length = 30
@@ -321,3 +337,4 @@ for i in range (30):
         rotate_B_reverse()
     elif random_num == 12:
         rotate_D_reverse()
+'''
