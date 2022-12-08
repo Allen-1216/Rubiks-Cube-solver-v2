@@ -38,11 +38,7 @@ print('connected!')
 # In this program, the client sends the first message and then waits for the
 # server to reply.
 
-#mbox.send('hello!')
-#mbox.wait()
-#print(mbox.read())
-
-#DLFR面 馬達控制
+#DLBR面 馬達控制
 def rotate_D(): #綠
     cube_D.run_angle(700, 271, then=Stop.COAST,wait=True)
     print('rotate_D angle : ', cube_D.angle(), file=sys.stderr)
@@ -104,7 +100,7 @@ def rotate_R_reverse():
     cube_R.reset_angle(0)
 
 
-#UB面 server端 馬達控制
+#UF面 server端 馬達控制
 def rotate_U(): #藍
     mbox.send('rotate_U')
     mbox.wait()
@@ -142,7 +138,7 @@ cube_list = 54
 #cube2d = [[0 for j in range(cube_y)] for k in range(cube_x)] #儲存掃描顏色的2維陣列
 cube1d = [0 for i in range(cube_list)] #儲存掃描顏色的1維陣列
 
-# pixy2掃描魔術方塊，取得顏色狀態，透過arduino輸出txt檔案到專案資料夾，再由這裡讀取txt狀態(最後一行)
+#pixy2掃描魔術方塊，取得顏色狀態，透過arduino輸出txt檔案到專案資料夾，再由這裡讀取txt狀態(最後一行)
 #如果最後一行不是54個結果，往上一行搜尋
 with open('teraterm.txt', 'r') as f:
     txtnum = -1
@@ -155,7 +151,8 @@ with open('teraterm.txt', 'r') as f:
     r_text = last_line.count('R')
     b_text = last_line.count('B')
     d_text = last_line.count('D')
-    while len(last_line) != totalnum or ((u_text != 9 ) or ( l_text != 9 ) or (f_text != 9) or (r_text != 9 ) or (b_text != 9) or (d_text != 9)):
+    while len(last_line) != totalnum or \
+    ((u_text != 9 ) or ( l_text != 9 ) or (f_text != 9) or (r_text != 9 ) or (b_text != 9) or (d_text != 9)):
         totalnum = 56
         txtnum -= 1
         last_line = content[txtnum]
